@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexus</title>
+    <style>
+        body {
+            overflow-x: hidden;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            padding: 0;
+            height: 100dvh;
+            width: 100dvw;
+            font-family: sans-serif;
+        }
+
+        p {
+            margin: 0;
+        }
+
+        .header {
+            z-index: 1;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid black;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            background-color: #0086ff;
+            width: 100%;
+        }
+
+        .header svg {
+            width: 3.5em;
+            height: 3.5em;
+        }
+
+        .header .user-profile {
+            width: 3.5em;
+            height: 3.5em;
+            border-radius: 100px;
+            border: 1px solid black;
+        }
+
+        .header input {
+            width: 50vw;
+            height: 2em;
+            border-radius: 10px;
+            padding: 5px;
+            font-size: x-large;
+            text-align: center;
+            border: 1px solid black;
+        }
+
+        .logo {
+            position: relative;
+        }
+
+        .logo div {
+            z-index: -1;
+            background-color: #0086ff;
+            position: absolute;
+            width: 3em;
+            height: 3em;
+        }
+
+        .logo div.right {
+            top: 0;
+            right: 0;
+        }
+
+        .logo div.left {
+            top: 0;
+            left: 0;
+        }
+
+        .logo svg {
+            width: 3.5em;
+            height: 3.5em;
+        }
+
+        .chat {
+            height: 100dvh;
+        }
+
+        .message {
+            margin-left: 20px;
+            border: 1px solid black;
+            width: max-content;
+            padding: 10px;
+            padding-left: 15px;
+            border-radius: 20px;
+            min-height: 2em;
+            max-width: 50vw;
+            margin-bottom: 15px;
+        }
+
+        .message img.pfp {
+            height: 2em;
+            width: 2em;
+            border-radius: 100px;
+            float: left;
+            margin-right: 10px;
+            border: 1px solid black;
+        }
+
+        .mine {
+            margin-right: 20px;
+            margin-left: auto;
+            background-color: #0086ff;
+            color: white;
+        }
+
+        .message.mine img.pfp {
+            float: right;
+        }
+
+        .message-area {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .footer input {
+            width: 100%;
+            font-size: large;
+            padding: 10px;
+            border-radius: 10px;
+            border: 1px solid black;
+            margin-left: 10px;
+            margin-right: 10px;
+            font-weight: 800;
+        }
+
+        .footer button {
+            margin: 20;
+            padding: 10px;
+            background-color: white;
+            color: #0086ff;
+            font-weight: 800;
+            font-size: large;
+            margin-right: 30px;
+            border-radius: 20px;
+            border: 1px solid black;
+        }
+
+        .footer {
+            width: 100dvw;
+            border-top: 1px solid black;
+            height: 3.5em;
+            display: flex;
+            align-items: center;
+            padding: 5px;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            border-top-right-radius: 20px;
+            border-top-left-radius: 20px;
+            background-color: #0086ff;
+            z-index: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <div class="logo">
+            <div class="right"></div>
+            <div class="left"></div>
+            <svg viewBox="0 0 513 513" fill="white" xmlns="http://www.w3.org/2000/svg">
+                <path
+                    d="M256.025.05C117.67-2.678 3.184 107.038.025 245.383a240.703 240.703 0 0085.333 182.613v73.387c0 5.891 4.776 10.667 10.667 10.667a10.67 10.67 0 005.653-1.621l59.456-37.141a264.142 264.142 0 0094.891 17.429c138.355 2.728 252.841-106.988 256-245.333C508.866 107.038 394.38-2.678 256.025.05z" />
+                <path
+                    d="M330.518 131.099l-213.825 130.08c-7.387 4.494-5.74 15.711 2.656 17.97l72.009 19.374a9.88 9.88 0 007.703-1.094l32.882-20.003-10.113 37.136a9.88 9.88 0 001.083 7.704l38.561 63.826c4.488 7.427 15.726 5.936 18.003-2.425l65.764-241.49c2.337-8.582-7.092-15.72-14.723-11.078zM266.44 356.177l-24.415-40.411 15.544-57.074c2.336-8.581-7.093-15.719-14.723-11.078l-50.536 30.744-45.592-12.266L319.616 160.91 266.44 356.177z"
+                    fill="#0086ff" />
+            </svg>
+        </div>
+        <img class="user-profile" src="https://api.dicebear.com/7.x/bottts/svg?seed=${username}"
+            class="account-profile">
+    </div>
+
+    <div class="chat">
+        <div class="message-area">
+            <div class="message" id="messages"></div>
+            <div class="footer">
+                <input type="text" id="messageInput" placeholder="Type your message...">
+                <button onclick="sendMessage()">Send</button>
+                <br>
+                <input type="text" id="ipInput" placeholder="IP:Port">
+                <button onclick="connect()">Connect</button>
+                <div id="connectionStatus"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const { ipcRenderer } = require('electron');
+
+        ipcRenderer.on('message-from-backend', (event, message) => {
+            document.getElementById('messages').innerHTML += `<div class="message">${message}</div>`;
+        });
+
+        function sendMessage() {
+            const messageInput = document.getElementById('messageInput');
+            const message = messageInput.value;
+            document.getElementById('messages').innerHTML += `<div class="message mine">${message}</div>`
+            ipcRenderer.send('send-message', message);
+            messageInput.value = '';
+        }
+
+        function connect() {
+            const ipInput = document.getElementById('ipInput');
+            const ip = ipInput.value;
+            ipcRenderer.send('connect', ip);
+        }
+    </script>
+</body>
+
+</html>
